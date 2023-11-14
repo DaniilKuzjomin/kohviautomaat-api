@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .hover-underline:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+
+<header>
+    <h1>Kohviautomaat</h1><br>
+</header>
+<body>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#coffeeAddModal" @click="AddCarModal">Add new coffee in list</button>
+<br><br>
+<div id="app">
+    <table id="coffeesTable" class="table table-striped table-bordered">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        <tr v-for="coffee in coffees">
+            <td @click="getCoffee(coffee.id)" class="hover-underline">{{ coffee.name }}</td>
+            <td>{{ coffee.description }}</td>
+        </tr>
+    </table>
+    <div id="coffeeInfoModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tr><th>Id</th><td>{{coffeeInModal.id}}</td></tr>
+                        <tr><th>Name</th><td>{{coffeeInModal.name}}</td></tr>
+                        <tr><th>Description</th><td>{{coffeeInModal.description}}</td></tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="editCoffeeModal">Edit coffee information</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="deleteCoffee(coffeeInModal.id)">Delete this coffee</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close button</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="coffeeAddModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tr><th>Id</th><td>{{ coffees.length + 1 }}</td></tr>
+                        <tr><th>Name</th><td><input type="text" v-model="newCoffee.name"></td></tr>
+                        <tr><th>Desciption</th><td><input type="text" v-model="newCoffee.description"></td></tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="addCoffee">Add coffee</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close button</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="coffeeEditModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tr><th>Id</th><td>{{coffeeInModal.id}}</td></tr>
+                        <tr><th>Name</th><td><input type="text" v-model="coffeeInModal.name"></td></tr>
+                        <tr><th>Description</th><td><input type="text" v-model="coffeeInModal.description"></td></tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="editCoffee(coffeeInModal.id)">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close button</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="rest-client.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+openapi: 3.0.2
+info:
+  title: Coffee-API
+  version: 1.0.0
+  description: This is a Swagger UI for our Coffee API
+paths:
+  /coffee:
+    get:
+      tags:
+        - coffee
+      responses:
+        '200':
+          description: List of coffee types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Coffee'
+              examples:
+                List of coffee types:
+                  value:
+                    - id: 1
+                      name: Espresso
+                      description: Strong and bold coffee
+                    - id: 2
+                      name: Latte
+                      description: Coffee with steamed milk
+                    # Add other coffee types here...
+      summary: Get a list of all coffee types
+      description: Returns a list of all available coffee types in the API
+    post:
+      tags:
+        - coffee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoffeeInput'
+      responses:
+        '201':
+          description: Coffee type created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coffee'
+      summary: Add a new coffee type
+      description: Adds a new coffee type to the API
+  '/coffee/{id}':
+    get:
+      tags:
+        - coffee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the coffee type to retrieve
+      responses:
+        '200':
+          description: Full details of a given coffee type by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coffee'
+              examples:
+                Full details of a given coffee type:
+                  value:
+                    id: 1
+                    name: Espresso
+                    description: Strong and bold coffee
+        '404':
+          description: Coffee type not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Coffee type not found in coffee array:
+                  value:
+                    error: Coffee type not found
+      operationId: getCoffeeById
+      summary: Get full details of a coffee type by ID
+      description: Returns full details of a coffee type with the given ID
+    put:
+      tags:
+        - coffee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the coffee type to update
+      requestBody:
+        description: New information for the coffee type
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoffeeInput'
+      responses:
+        '200':
+          description: Coffee type updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coffee'
+        '404':
+          description: Coffee type not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      summary: Update a coffee type by ID
+      description: Updates information about a coffee type with the given ID
+    delete:
+      tags:
+        - coffee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the coffee type to delete
+      responses:
+        '204':
+          description: Coffee type deleted successfully
+        '404':
+          description: Coffee type not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      summary: Delete a coffee type by ID
+      description: Deletes a coffee type with the given ID from the API
+components:
+  schemas:
+    Coffee:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+      example:
+        id: 1
+        name: Espresso
+        description: Strong and bold coffee
+
+    CoffeeInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
+      example:
+        name: Mocha
+        description: Coffee with intense aroma
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      example:
+        error: Error message
