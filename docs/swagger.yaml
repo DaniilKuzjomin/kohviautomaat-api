@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
-  title: Coffee-API
+  title: kohviautomaat-api
   version: 1.0.0
   description: This is a Swagger UI for our Coffee API
 paths:
-  /coffee:
+  /coffees:
     get:
       tags:
         - coffee
@@ -26,7 +26,6 @@ paths:
                     - id: 2
                       name: Latte
                       description: Coffee with steamed milk
-                    # Add other coffee types here...
       summary: Get a list of all coffee types
       description: Returns a list of all available coffee types in the API
     post:
@@ -46,7 +45,7 @@ paths:
                 $ref: '#/components/schemas/Coffee'
       summary: Add a new coffee type
       description: Adds a new coffee type to the API
-  '/coffee/{id}':
+  '/coffees/{id}':
     get:
       tags:
         - coffee
@@ -146,11 +145,19 @@ components:
           type: string
         description:
           type: string
+        quantity:
+          type: string
+        size:
+          type: string
+        paymentmethod:
+          type: string
       example:
         id: 1
         name: Espresso
         description: Strong and bold coffee
-
+        quantity: "10"
+        size: Big
+        paymentmethod: Card
     CoffeeInput:
       type: object
       properties:
@@ -158,13 +165,24 @@ components:
           type: string
         description:
           type: string
+        quantity:
+          type: string
+        size:
+          type: string
+        paymentmethod:
+          type: string
       required:
         - name
         - description
+        - quantity
+        - size
+        - paymentmethod
       example:
         name: Mocha
         description: Coffee with intense aroma
-
+        quantity: "2"
+        size: Big
+        paymentmethod: Cash
     Error:
       type: object
       properties:

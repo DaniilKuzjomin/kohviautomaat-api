@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Admin page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         .hover-underline:hover {
@@ -17,7 +17,7 @@
 </head>
 
 <header>
-    <h1>Kohviautomaat</h1><br>
+    <h1>Coffee Machine</h1><br>
 </header>
 <body>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#coffeeAddModal" @click="AddCarModal">Add new coffee in list</button>
@@ -26,11 +26,9 @@
     <table id="coffeesTable" class="table table-striped table-bordered">
         <tr>
             <th>Name</th>
-            <th>Description</th>
         </tr>
         <tr v-for="coffee in coffees">
             <td @click="getCoffee(coffee.id)" class="hover-underline">{{ coffee.name }}</td>
-            <td>{{ coffee.description }}</td>
         </tr>
     </table>
     <div id="coffeeInfoModal" class="modal" tabindex="-1">
@@ -44,6 +42,9 @@
                         <tr><th>Id</th><td>{{coffeeInModal.id}}</td></tr>
                         <tr><th>Name</th><td>{{coffeeInModal.name}}</td></tr>
                         <tr><th>Description</th><td>{{coffeeInModal.description}}</td></tr>
+                        <tr><th>Quantity</th><td>{{coffeeInModal.quantity}}</td></tr>
+                        <tr><th>Size</th><td>{{coffeeInModal.size}}</td></tr>
+                        <tr><th>Payment Method</th><td>{{coffeeInModal.paymentmethod}}</td></tr>
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -66,6 +67,9 @@
                         <tr><th>Id</th><td>{{ coffees.length + 1 }}</td></tr>
                         <tr><th>Name</th><td><input type="text" v-model="newCoffee.name"></td></tr>
                         <tr><th>Desciption</th><td><input type="text" v-model="newCoffee.description"></td></tr>
+                        <tr><th>Quantity</th><td><input type="text" v-model="newCoffee.quantity"></td></tr>
+                        <tr><th>Size</th><td><input type="text" v-model="newCoffee.size"></td></tr>
+                        <tr><th>Payment Method</th><td><input type="text" v-model="newCoffee.paymentmethod"></td></tr>
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -87,6 +91,24 @@
                         <tr><th>Id</th><td>{{coffeeInModal.id}}</td></tr>
                         <tr><th>Name</th><td><input type="text" v-model="coffeeInModal.name"></td></tr>
                         <tr><th>Description</th><td><input type="text" v-model="coffeeInModal.description"></td></tr>
+                        <tr><th>Quantity</th><td><input type="text" v-model="coffeeInModal.quantity"></td></tr>
+                        <tr><th>Size</th>
+                            <td>
+                                <select v-model="coffeeInModal.size">
+                                    <option value="Small">Small</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Big">Big</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr><th>Payment Method</th>
+                            <td>
+                                <select v-model="coffeeInModal.paymentmethod">
+                                    <option value="Card">Card</option>
+                                    <option value="Cash">Cash</option>
+                                </select>
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <div class="modal-footer">

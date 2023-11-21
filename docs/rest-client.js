@@ -3,7 +3,7 @@ const vue = Vue.createApp({
         return {
             coffeeInModal: { name: null },
             coffees: [],
-            newCoffee: { name: '', description: '' }
+            newCoffee: { name: '', description: '', quantity: '', size: '', paymentmethod: '' }
         }
     },
     async created() {
@@ -32,6 +32,9 @@ const vue = Vue.createApp({
 
             this.newCoffee.name = '';
             this.newCoffee.description = '';
+            this.newCoffee.quantity = '';
+            this.newCoffee.size = '';
+            this.newCoffee.paymentmethod = '';
 
             this.coffees = await (await fetch('http://localhost:8080/coffees')).json();
 
@@ -49,7 +52,10 @@ const vue = Vue.createApp({
                 },
                 body: JSON.stringify({
                     name: this.coffeeInModal.name,
-                    description: this.coffeeInModal.description
+                    description: this.coffeeInModal.description,
+                    quantity: this.coffeeInModal.quantity,
+                    size: this.coffeeInModal.size,
+                    paymentmethod: this.coffeeInModal.paymentmethod
                 })
             });
 
